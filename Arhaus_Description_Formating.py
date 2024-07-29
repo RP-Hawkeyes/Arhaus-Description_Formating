@@ -3,7 +3,7 @@
 
 import streamlit as st
 import pandas as pd
-import openpyxl  # Ensure openpyxl is imported
+import openpyxl
 import os
 import re
 
@@ -25,29 +25,31 @@ def main():
 
     uploaded_file = st.file_uploader("Choose an Excel file", type=["xlsx"])
     if uploaded_file is not None:
-        df = pd.read_excel(uploaded_file)
-        st.write("File uploaded successfully. Here are the first few rows:")
-        st.write(df.head())
-        
-        if 'Description' in df.columns:
-            output_file_name = st.text_input("Enter the output file name (with .xlsx extension)", value="formatted_output.xlsx")
+        try:
+            df = pd.read_excel(uploaded_file)
+            st.write("File uploaded successfully. Here are the first few rows:")
+            st.write(df.head())
 
-            if st.button("Format Descriptions"):
-                if output_file_name:
-                    formatted_df = format_descriptions(df)
-                    output_file_path = os.path.join("downloads", output_file_name)
-                    os.makedirs("downloads", exist_ok=True)
-                    formatted_df.to_excel(output_file_path, index=False)
-                    st.success(f"Formatted data saved to {output_file_path}")
+            if 'Description' in df.columns:
+                output_file_name = st.text_input("Enter the output file name (with .xlsx extension)", value="formatted_output.xlsx")
 
-                    # Provide a download link
-                    with open(output_file_path, "rb") as file:
-                        st.download_button(label="Download formatted file", data=file, file_name=output_file_name)
-                else:
-                    st.error("Please enter a valid output file name")
-        else:
-            st.error("The uploaded file does not contain a 'Description' column.")
+                if st.button("Format Descriptions"):
+                    if output_file_name:
+                        formatted_df = format_descriptions(df)
+                        output_file_path = os.path.join("downloads", output_file_name)
+                        os.makedirs("downloads", exist_ok=True)
+                        formatted_df.to_excel(output_file_path, index=False)
+                        st.success(f"Formatted data saved to {output_file_path}")
+
+                        # Provide a download link
+                        with open(output_file_path, "rb") as file:
+                            st.download_button(label="Download formatted file", data=file, file_name=output_file_name)
+                    else:
+                        st.error("Please enter a valid output file name")
+            else:
+                st.error("The uploaded file does not contain a 'Description' column.")
+        except Exception as e:
+            st.error(f"An error occurred: {e}")
 
 if __name__ == "__main__":
     main()
-
