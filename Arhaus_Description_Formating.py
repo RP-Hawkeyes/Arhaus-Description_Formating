@@ -3,13 +3,18 @@
 
 import streamlit as st
 import pandas as pd
-import openpyxl  # Ensure openpyxl is imported
 import os
 import re
-
-# Debugging step to print installed packages
 import subprocess
-subprocess.run(["pip", "list"], stdout=subprocess.PIPE, text=True, check=True)
+
+# Check and print installed packages
+installed_packages = subprocess.check_output(["pip", "list"], text=True)
+st.text(installed_packages)
+
+try:
+    import openpyxl  # Ensure openpyxl is imported
+except ModuleNotFoundError:
+    st.error("openpyxl is not installed. Please check your requirements.txt file.")
 
 def format_descriptions(df):
     # Format the descriptions
