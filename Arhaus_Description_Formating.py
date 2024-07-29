@@ -3,9 +3,13 @@
 
 import streamlit as st
 import pandas as pd
-import openpyxl
+import openpyxl  # Ensure openpyxl is imported
 import os
 import re
+
+# Debugging step to print installed packages
+import subprocess
+subprocess.run(["pip", "list"], stdout=subprocess.PIPE, text=True, check=True)
 
 def format_descriptions(df):
     # Format the descriptions
