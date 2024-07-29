@@ -21,7 +21,7 @@ def format_descriptions(df, column_name):
     return df
 
 def main():
-    st.title("Excel Description Formatter")
+    st.title("Arhaus Description Formatter")
 
     uploaded_file = st.file_uploader("Choose an Excel file", type=["xlsx"])
     if uploaded_file is not None:
@@ -30,10 +30,10 @@ def main():
         st.write(df.head())
         
         # User input for column name
-        column_name = st.text_input("Enter the column name containing descriptions", value="Description")
+        column_name = st.text_input("Enter the column name containing descriptions")
         
         # User input for output file name (without extension)
-        output_file_name = st.text_input("Enter the output file name (without extension)", value="formatted_output")
+        output_file_name = st.text_input("Enter the output file name (without extension)")
         
         if st.button("Format Descriptions"):
             if column_name in df.columns:
