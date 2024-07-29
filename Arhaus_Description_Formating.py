@@ -3,6 +3,7 @@
 
 import streamlit as st
 import pandas as pd
+import openpyxl  # Import openpyxl
 import os
 import re
 
@@ -15,7 +16,7 @@ def format_descriptions(df):
         parts = [part for part in parts if part]
         # Join with bullet points
         return '• ' + '\n• '.join(parts)
-
+    
     df['Description'] = df['Description'].apply(format_description)
     return df
 
@@ -27,7 +28,7 @@ def main():
         df = pd.read_excel(uploaded_file)
         st.write("File uploaded successfully. Here are the first few rows:")
         st.write(df.head())
-
+        
         if 'Description' in df.columns:
             output_file_name = st.text_input("Enter the output file name (with .xlsx extension)", value="formatted_output.xlsx")
 
