@@ -21,7 +21,7 @@ def format_descriptions(df, column_name):
     return df
 
 def main():
-    st.title("Arhaus Description Formatter")
+    st.title("Description Formatter - (Para to Bulletin)")
 
     uploaded_file = st.file_uploader("Choose an Excel file", type=["xlsx"])
     if uploaded_file is not None:
